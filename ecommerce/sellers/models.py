@@ -11,6 +11,7 @@ class Seller(models.Model):
     join_date = models.DateTimeField(auto_now_add=True)
     sales = models.PositiveIntegerField(default=0)
     slug = models.SlugField(max_length=100, unique=True, blank=False)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.name

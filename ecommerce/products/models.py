@@ -9,8 +9,9 @@ class Product(models.Model):
     sales = models.PositiveIntegerField(default=0)
     stock = models.PositiveIntegerField(default=0)
     sub_date = models.DateTimeField(auto_now_add=True)
-    in_warehouse = models.BooleanField(default=False)
     seller = models.ForeignKey(Seller, on_delete=models.CASCADE, related_name='products')
+    is_active = models.BooleanField(default=True)
+    # in_warehouse = models.BooleanField(default=False)
     # warehouse = models.CharField(max_length=99, choices=warehouses, default=None)
 
     def __str__(self):
