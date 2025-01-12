@@ -36,12 +36,19 @@ class User(AbstractBaseUser, PermissionsMixin):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_seller = models.BooleanField(default=False)
-    purchases = models.IntegerField(default=0)
+    purchases = models.PositiveIntegerField(default=0)
 
     objects = EmailUserManager()
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.email
+
+    def __bool__(self):
+        return self.is_active

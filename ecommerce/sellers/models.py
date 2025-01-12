@@ -10,8 +10,15 @@ class Seller(models.Model):
     owner = models.ForeignKey(User, on_delete=models.CASCADE)
     join_date = models.DateTimeField(auto_now_add=True)
     sales = models.PositiveIntegerField(default=0)
-    slug = models.SlugField(max_length=100, unique=True, blank=False)
+    slug = models.SlugField(max_length=100, unique=True, blank=True)
     is_active = models.BooleanField(default=True)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
 
     def __str__(self):
         return self.name
+
+    def __bool__(self):
+        return self.is_active

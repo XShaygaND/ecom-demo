@@ -14,5 +14,12 @@ class Product(models.Model):
     # in_warehouse = models.BooleanField(default=False)
     # warehouse = models.CharField(max_length=99, choices=warehouses, default=None)
 
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return self.name
+
+    def __bool__(self):
+        return self.is_active
