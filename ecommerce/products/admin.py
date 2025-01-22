@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from products.models import Product
+from .models import Product
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
@@ -17,7 +17,7 @@ class ProductAdmin(admin.ModelAdmin):
         )
 
     list_filter = ('seller',)
-    search_fields = ('name', 'description')
+    search_fields = ('id', 'name', 'description')
     readonly_fields = ('sales', 'sub_date')
 
     def get_exclude(self, request, obj = ...):

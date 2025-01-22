@@ -4,11 +4,12 @@ from django.utils.timezone import now
 from datetime import timedelta
 
 from .models import User
+from carts.models import Cart
 
 
 class UserTestCase(TestCase):
     def setUp(self):
-        User.objects.create(email="test@email.com", password='pass123')
+        User.objects.create(email="test@email.com", password='Pass123')
 
     def test_user_default_fields(self):
         user = User.objects.get(email="test@email.com")
@@ -43,3 +44,8 @@ class UserTestCase(TestCase):
         user.save()
 
         self.assertEqual(user.date_joined, original_join_date)
+
+    def test_user_auto_cart_creation(self):
+        user = User.objects.get(email="test@email.com")
+
+        self.assertTrue(Cart.objects.filter(owner=user).exists())

@@ -8,6 +8,7 @@ class SellerAdmin(admin.ModelAdmin):
     form = SellerForm
 
     list_display = (
+        'id',
         'name',
         'description',
         'owner',
@@ -17,5 +18,5 @@ class SellerAdmin(admin.ModelAdmin):
         'is_active'
     )
 
-    search_fields = ('name', 'description')
+    search_fields = ('name', 'owner__email')
     readonly_fields = ('join_date', 'sales', 'slug')

@@ -1,6 +1,7 @@
 from django.db.models.signals import pre_save, post_save
 from django.template.defaultfilters import slugify
 from django.dispatch import receiver
+
 from .models import Seller
 
 @receiver(pre_save, sender=Seller)
