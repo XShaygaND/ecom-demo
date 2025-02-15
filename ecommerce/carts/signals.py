@@ -17,4 +17,4 @@ def cart_pre_save(sender, instance, **kwargs):
 @receiver(post_save, sender=CartItem)
 @receiver(post_delete, sender=CartItem)
 def update_cart_count(sender, instance, **kwargs):
-    instance.cart.update_count()
+    instance.cart.update_totals()

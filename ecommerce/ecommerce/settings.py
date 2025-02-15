@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "sellers.apps.SellersConfig",
     "users.apps.UsersConfig",
     "carts.apps.CartsConfig",
+    "orders.apps.OrdersConfig",
     "rest_framework",
 ]
 

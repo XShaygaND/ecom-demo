@@ -30,7 +30,7 @@ class CartTestCase(TestCase):
         self.assertRaises(ValidationError, cart.save)
 
     def test_cart_only_one_for_user(self):
-        cart = Cart.objects.get(owner=self.user)
+        Cart.objects.get(owner=self.user)
 
         with self.assertRaises(ValidationError):
             Cart.objects.create(owner=self.user)
@@ -144,14 +144,14 @@ class CartItemTestCase(TestCase):
 
     def test_cart_item_add_with_multiple_quantity(self):
         cart = Cart.objects.get(owner=self.suser)
-        cartitem = CartItem.objects.create(cart=cart, product=self.product, quantity=3)
+        CartItem.objects.create(cart=cart, product=self.product, quantity=3)
 
 
         self.assertEqual(cart.cartitems.all()[0].quantity, 3)
 
     def test_cart_duplicate_item_merging(self):
         cart = self.cart
-        cartitem = CartItem.objects.get(cart=cart)
+        CartItem.objects.get(cart=cart)
 
         CartItem.objects.create(cart=cart, product=self.product)
 
@@ -166,7 +166,7 @@ class CartItemTestCase(TestCase):
         self.assertEqual(self.suser.carts.all()[0].cartitems.all()[0], cartitem)
 
     def test_cart_item_in_multiple_carts(self):
-        cart = Cart.objects.get(owner=self.user)
+        Cart.objects.get(owner=self.user)
         cartitem = CartItem.objects.get(cart=self.cart)
 
         scart = Cart.objects.get(owner=self.suser)
@@ -174,3 +174,20 @@ class CartItemTestCase(TestCase):
 
         self.assertTrue(cartitem.product == scart.cartitems.get(product=self.product).product)
 
+    def test_cart_item_add_to_inactive_cart(self):
+        cart = Cart.objects.get(owner=self.user)
+        cart.is_active = False
+        cart.save()
+
+        with self.assertRaises(ValidationError):
+            CartItem.objects.create(cart=cart, product=self.product)
+
+    def test_cart_item_change_quantity_inactive_cart(self):
+        cart = Cart.objects.get(owner=self.user)
+        cart.is_active = False
+        cart.save()
+
+        with self.assertRaises(ValidationError):
+            cartitem = CartItem.objects.get(cart=self.cart)
+            cartitem.quantity += 2
+            cartitem.save()

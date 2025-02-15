@@ -18,5 +18,5 @@ class SellerAdmin(admin.ModelAdmin):
         'is_active'
     )
 
-    search_fields = ('name', 'owner__email')
+    search_fields = ('id', 'name', 'owner__email')
     readonly_fields = ('join_date', 'sales', 'slug')

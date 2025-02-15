@@ -36,6 +36,7 @@ class UserAdmin(admin.ModelAdmin):
     )
 
     search_fields = (
+        'id',
         'email',
     )
 
