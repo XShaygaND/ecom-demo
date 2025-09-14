@@ -16,10 +16,12 @@ class Cart(models.Model):
     is_active = models.BooleanField(default=True)
     total_sum = models.DecimalField(max_digits=10, decimal_places=2, default=0)
 
+    #TODO: Try to fully clean the code from this function
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
 
+    #TODO: Replace with a property
     def update_totals(self):
         total_quantity = self.cartitems.aggregate(total=Sum('quantity'))['total'] or 0
         total_price = self.cartitems.aggregate(
@@ -51,6 +53,7 @@ class CartItem(models.Model):
         if not self.cart.is_active:
             raise ValidationError("Cannot add items to an inactive cart.")
 
+    #TODO: figure out if we can make this simpler
     def save(self, *args, **kwargs):
         self.full_clean()
 

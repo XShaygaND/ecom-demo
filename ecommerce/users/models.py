@@ -3,7 +3,7 @@ from django.db import models
 
 
 class EmailUserManager(BaseUserManager):
-    def create(self, email, password=None, **extra_fields):
+    def create_user(self, email, password=None, **extra_fields):
         """Create and return a regular user with an email and password."""
 
         if not email:
@@ -30,8 +30,8 @@ class EmailUserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(unique=True)
-    first_name = models.CharField(max_length=30, blank=True)
-    last_name = models.CharField(max_length=30, blank=True)
+    first_name = models.CharField(max_length=30)
+    last_name = models.CharField(max_length=30)
     date_joined = models.DateTimeField(auto_now_add=True)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
